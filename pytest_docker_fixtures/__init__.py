@@ -46,6 +46,24 @@ def cockroach():
 
 
 @pytest.fixture(scope='session')
+def dynamodb():
+    """Define dynamodb fixture."""
+    if os.environ.get('DYNAMODB'):
+        yield os.environ['DYNAMODB'].split(':')
+    else:
+        if IS_TRAVIS:
+            host = 'localhost'
+            port = 8000
+        else:
+            host, port = dynamodb_image.run()
+
+        yield host, port  # provide the fixture value
+
+        if not IS_TRAVIS:
+            dynamodb_image.stop()
+
+
+@pytest.fixture(scope='session')
 def pg():
     if os.environ.get('POSTGRESQL'):
         yield os.environ['POSTGRESQL'].split(':')
