@@ -14,9 +14,11 @@ settings = {
     },
     'dynamodb': {
         'image': 'amazon/dynamodb-local',
-        'version': '',
-        'ports': {
-            '8000/tcp': '8000'
+        'version': 'latest',
+        'options': {
+            'ports': {
+                f'8000/tcp': '8000'
+            }
         }
     },
     'elasticsearch': {
