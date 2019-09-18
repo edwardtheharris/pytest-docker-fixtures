@@ -12,6 +12,13 @@ settings = {
             }
         }
     },
+    'dynamodb': {
+        'image': 'amazon/dynamodb-local',
+        'version': '',
+        'ports': {
+            '8000/tcp': '8000'
+        }
+    },
     'elasticsearch': {
         'image': 'elasticsearch',
         'version': '5.2.0',
@@ -116,10 +123,12 @@ def get_env(name):
     image = settings[name]
     return image.get('env') or {}
 
+
 def get_max_wait_s(name):
     # Default to 30 seconds
     image = settings[name]
     return image.get('max_wait_s') or 30
+
 
 def get_options(name):
     image = settings[name]
