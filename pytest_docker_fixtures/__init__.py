@@ -1,4 +1,5 @@
 from .containers.cockroach import cockroach_image
+from .containers.dynamodb import dynamodb_image
 from .containers.es import es_image
 from .containers.etcd import etcd_image
 from .containers.pg import pg_image

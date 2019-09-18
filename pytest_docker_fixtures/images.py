@@ -99,12 +99,14 @@ settings = {
 
 
 def get_image(name):
+    """Get a docker image."""
     image = settings[name]
     return image['image'] + ':' + image['version']
 
 
 def configure(name, image=None, version=None, full=None,
               env=None, options=None, max_wait_s=None):
+    """Configure an image."""
     if full is not None:
         image, _, version = full.partition(':')
     if image is not None:
@@ -120,16 +122,19 @@ def configure(name, image=None, version=None, full=None,
 
 
 def get_env(name):
+    """Get env values."""
     image = settings[name]
     return image.get('env') or {}
 
 
 def get_max_wait_s(name):
+    """Get wait limit."""
     # Default to 30 seconds
     image = settings[name]
     return image.get('max_wait_s') or 30
 
 
 def get_options(name):
+    """Get options."""
     image = settings[name]
     return image.get('options') or {}
