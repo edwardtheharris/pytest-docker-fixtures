@@ -1,4 +1,5 @@
 from .containers.cockroach import cockroach_image
+from .containers.dynamodb import dynamodb_image
 from .containers.es import es_image
 from .containers.etcd import etcd_image
 from .containers.pg import pg_image
@@ -42,6 +43,24 @@ def cockroach():
     else:
         yield cockroach_image.run()
         cockroach_image.stop()
+
+
+@pytest.fixture(scope='session')
+def dynamodb():
+    """Define dynamodb fixture."""
+    if os.environ.get('DYNAMODB'):
+        yield os.environ['DYNAMODB'].split(':')
+    else:
+        if IS_TRAVIS:
+            host = 'localhost'
+            port = 8000
+        else:
+            host, port = dynamodb_image.run()
+
+        yield host, port  # provide the fixture value
+
+        if not IS_TRAVIS:
+            dynamodb_image.stop()
 
 
 @pytest.fixture(scope='session')
